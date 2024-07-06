@@ -1,0 +1,80 @@
+
+
+name: Deploy to GCP
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: paved-road-intuit
+      REGION: us-central1
+      IMAGE_NAME: testone
+      CLUSTER_NAME: tseven-cluster
+      
+
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Build with Maven
+      run: mvn clean package
+
+    - name: Run tests
+      run: mvn test
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Google Auth
+      id: auth
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_CONFIG }}'
+
+    - name: Set up Cloud SDK
+      uses: 'google-github-actions/setup-gcloud@v1'
+
+    - name: Configure Docker authentication
+      run: |
+        gcloud auth configure-docker gcr.io --quiet
+
+    - name: Build and push Docker image
+      env:
+        GIT_TAG: ${{ github.sha }}
+      run: |
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:$GIT_TAG .
+        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:$GIT_TAG
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_wrapper: false
+
+
+    - name: Terraform Init
+      run: terraform init
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SERVICE_ACCOUNT_CONFIG }}
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var "project_id=${{ env.PROJECT_ID }}" -var "region=${{ env.REGION }}" -var "image_name=gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GCP_SERVICE_ACCOUNT_CONFIG }}
+
+

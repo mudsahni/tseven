@@ -1,0 +1,153 @@
+# Maven
+/target/
+!**/src/main/**/target/
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/logs
+*.log
+*.log.*
+
+# Maven build files
+tseven/mvnw
+tseven/mvnw.cmd
+/.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+.metadata/
+.springBeans
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Kotlin
+*.class
+*.kt~*
+*.kts~*
+
+# Spring Boot
+/spring-boot/
+!/tseven/src/main/resources/application.properties
+!/tseven/src/main/resources/application.yml
+
+# Log directory
+/logs/
+*.log
+
+# H2 database files
+*.h2.db
+*.mv.db
+*.trace.db
+
+# Static files
+/tseven/src/main/resources/static/built/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Specific for WebStorm
+.idea/
+*.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+# Specific for Eclipse
+.project
+.classpath
+*.launch
+.settings/
+.tmp/
+bin/
+target/
+
+# Specific for IntelliJ IDEA
+*.iws
+*.iml
+*.ipr
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# VS Code directories
+.vscode/
+.history/
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+# User-specific files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/shelf
+
+# Generated files
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+
+# Sensitive or personal files
+.idea/**/deployment.xml
+.idea/**/glassfish-system.xml
+.idea/**/gradle.xml
+.idea/**/liferay.xml
+.idea/**/structureSettings.xml
+
+# Scratch files
+.idea/scratches/
+
+# Editor-specific
+*.swp
+*.swo
+*~
+
+# Mac-specific
+.DS_Store
+
+# Windows-specific
+Thumbs.db
+
+# JetBrains specific
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# NetBeans specific
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
